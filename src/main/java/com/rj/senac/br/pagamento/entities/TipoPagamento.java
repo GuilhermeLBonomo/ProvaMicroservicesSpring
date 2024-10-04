@@ -4,23 +4,32 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
+
 @Entity
-@Table(name="TipoPagamento")
+@Table(name = "tipo_pagamento")
 public class TipoPagamento {
+
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name="idTipoPagamento", nullable = false)
-    private Integer idTipoPagamento;
-    @Column(name="metodoPagamento", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tipo_pagamento", nullable = false)
+    private Long idTipoPagamento;
+
+    @NotNull
+    @Column(name = "metodo_pagamento", nullable = false)
     private String metodoPagamento;
-    @Column(name="status", nullable = false)
+
+    @NotNull
+    @Column(name = "status", nullable = false)
     private Integer status;
 
-    public Integer getIdTipoPagamento() {
+    public TipoPagamento() {
+    }
+
+    public Long getIdTipoPagamento() {
         return this.idTipoPagamento;
     }
 
-    public void setIdTipoPagamento(@NotNull Integer idTipoPagamento) {
+    public void setIdTipoPagamento(Long idTipoPagamento) {
         this.idTipoPagamento = idTipoPagamento;
     }
 
@@ -28,7 +37,7 @@ public class TipoPagamento {
         return this.metodoPagamento;
     }
 
-    public void setMetodoPagamento(@NotNull String metodoPagamento) {
+    public void setMetodoPagamento(String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
     }
 
@@ -36,24 +45,22 @@ public class TipoPagamento {
         return this.status;
     }
 
-    public void setStatus(@NotNull Integer status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "TipoPagamento{" +
-                "idTipoPagamento=" + idTipoPagamento +
-                ", metodoPagamento='" + metodoPagamento + '\'' +
-                ", status=" + status +
-                '}';
+        return "TipoPagamento{idTipoPagamento=%d, metodoPagamento='%s', status=%d}".formatted(idTipoPagamento, metodoPagamento, status);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TipoPagamento that)) return false;
-        return Objects.equals(getIdTipoPagamento(), that.getIdTipoPagamento()) && Objects.equals(getMetodoPagamento(), that.getMetodoPagamento()) && Objects.equals(getStatus(), that.getStatus());
+        return Objects.equals(getIdTipoPagamento(), that.getIdTipoPagamento()) &&
+                Objects.equals(getMetodoPagamento(), that.getMetodoPagamento()) &&
+                Objects.equals(getStatus(), that.getStatus());
     }
 
     @Override
@@ -61,9 +68,9 @@ public class TipoPagamento {
         return Objects.hash(getIdTipoPagamento(), getMetodoPagamento(), getStatus());
     }
 
-    public TipoPagamento(@NotNull Integer idTipoPagamento, @NotNull String metodoPagamento, @NotNull Integer status) {
-        this.idTipoPagamento = idTipoPagamento;
-        this.metodoPagamento = metodoPagamento;
-        this.status = status;
+    public TipoPagamento(Long idTipoPagamento, @NotNull String metodoPagamento, @NotNull Integer status) {
+        this.setIdTipoPagamento(idTipoPagamento);
+        this.setStatus(status);
+        this.setMetodoPagamento(metodoPagamento);
     }
 }

@@ -1,46 +1,46 @@
 CREATE DATABASE pagamento;
 USE pagamento;
 
-CREATE TABLE TipoPagamento (
-  `idTipoPagamento` INT NOT NULL,
-  `metodoPagamento` VARCHAR(45) NOT NULL,
-  `status` INT NOT NULL,
-  PRIMARY KEY (`idTipoPagamento`),
-  UNIQUE INDEX `id_UNIQUE` (`idTipoPagamento`),
-  UNIQUE INDEX `metodoPagamento_UNIQUE` (`metodoPagamento`)
+-- Tabela tipo_pagamento
+CREATE TABLE tipo_pagamento (
+  id_tipo_pagamento BIGINT NOT NULL,
+  metodo_pagamento VARCHAR(45) NOT NULL,
+  status INT NOT NULL,
+  PRIMARY KEY (id_tipo_pagamento),
+  UNIQUE INDEX idx_metodo_pagamento (metodo_pagamento)
 ) ENGINE = InnoDB;
 
-CREATE TABLE Usuario (
-  `idUsuario` INT NOT NULL AUTO_INCREMENT,
-  `cpf` CHAR(11) NOT NULL,
-  `nome` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `status` INT NOT NULL,
-  PRIMARY KEY (`idUsuario`),
-  UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario`),
-  UNIQUE INDEX `cpf_UNIQUE` (`cpf`),
-  UNIQUE INDEX `email_UNIQUE` (`email`)
+-- Tabela usuario
+CREATE TABLE usuario (
+  id_usuario BIGINT NOT NULL AUTO_INCREMENT,
+  cpf CHAR(11) NOT NULL,
+  nome VARCHAR(45) NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  status INT NOT NULL,
+  PRIMARY KEY (id_usuario),
+  UNIQUE INDEX idx_cpf (cpf),
+  UNIQUE INDEX idx_email (email)
 ) ENGINE = InnoDB;
 
-CREATE TABLE notaFiscal (
-  `idNotaFiscal` INT NOT NULL AUTO_INCREMENT,
-  `usuarioId` INT NOT NULL,  -- Alterado para INT
-  `status` INT NOT NULL,
-  `valorTotalCent` INT UNSIGNED NOT NULL,
-  `TipoPagamento_idTipoPagamento` INT NOT NULL,
-  `idProduto` INT NOT NULL,
-  PRIMARY KEY (`idNotaFiscal`),
-  UNIQUE INDEX `idNotaFiscal_UNIQUE` (`idNotaFiscal`),
-  INDEX `fk_notaFiscal_Usuario_idx` (`usuarioId`),  -- Alterado para notaFiscal
-  INDEX `fk_notaFiscal_TipoPagamento1_idx` (`TipoPagamento_idTipoPagamento`),  -- Alterado para notaFiscal
-  CONSTRAINT `fk_notaFiscal_Usuario`
-    FOREIGN KEY (`usuarioId`)
-    REFERENCES pagamento.Usuario (`idUsuario`)
+-- Tabela nota_fiscal
+CREATE TABLE nota_fiscal (
+  id_nota_fiscal BIGINT NOT NULL AUTO_INCREMENT,
+  id_usuario BIGINT NOT NULL,
+  status INT NOT NULL,
+  valor_total DECIMAL UNSIGNED NOT NULL,
+  id_tipo_pagamento BIGINT NOT NULL,
+  id_produto BIGINT NOT NULL,
+  PRIMARY KEY (id_nota_fiscal),
+  INDEX idx_fk_nota_fiscal_usuario (id_usuario),
+  INDEX idx_fk_nota_fiscal_tipo_pagamento (id_tipo_pagamento),
+  CONSTRAINT fk_nota_fiscal_usuario
+    FOREIGN KEY (id_usuario)
+    REFERENCES usuario (id_usuario)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_notaFiscal_TipoPagamento1`
-    FOREIGN KEY (`TipoPagamento_idTipoPagamento`)
-    REFERENCES pagamento.TipoPagamento (`idTipoPagamento`)
+  CONSTRAINT fk_nota_fiscal_tipo_pagamento
+    FOREIGN KEY (id_tipo_pagamento)
+    REFERENCES tipo_pagamento (id_tipo_pagamento)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
