@@ -1,7 +1,8 @@
 package com.rj.senac.br.pagamento.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 @Entity
@@ -13,19 +14,15 @@ public class Usuario {
     @Column(name = "id_usuario", nullable = false)
     private Long idUsuario;
 
-    @NotNull
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
 
-    @NotNull
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotNull
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private Integer status;
 

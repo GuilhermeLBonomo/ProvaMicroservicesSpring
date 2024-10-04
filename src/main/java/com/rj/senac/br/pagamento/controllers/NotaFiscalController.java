@@ -2,7 +2,6 @@ package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.NotaFiscal;
 import com.rj.senac.br.pagamento.services.NotaFiscalService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class NotaFiscalController {
     }
 
     @PostMapping
-    public ResponseEntity<NotaFiscal> adicionarNotaFiscal(@Valid @RequestBody NotaFiscal notaFiscal) {
+    public ResponseEntity<NotaFiscal> adicionarNotaFiscal(@RequestBody NotaFiscal notaFiscal) {
         NotaFiscal novaNotaFiscal = notaFiscalService.adicionarNotaFiscal(notaFiscal);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaNotaFiscal);
     }
@@ -40,7 +39,7 @@ public class NotaFiscalController {
     @PutMapping("/{id}")
     public ResponseEntity<NotaFiscal> atualizarNotaFiscal(
             @PathVariable("id") Long id,
-            @Valid @RequestBody NotaFiscal notaFiscalAtualizada) {
+            @RequestBody NotaFiscal notaFiscalAtualizada) {
         NotaFiscal notaFiscal = notaFiscalService.atualizarNotaFiscal(id, notaFiscalAtualizada);
         return ResponseEntity.ok(notaFiscal);
     }

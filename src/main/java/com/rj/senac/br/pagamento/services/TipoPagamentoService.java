@@ -2,7 +2,7 @@ package com.rj.senac.br.pagamento.services;
 
 import com.rj.senac.br.pagamento.entities.TipoPagamento;
 import com.rj.senac.br.pagamento.repositories.TipoPagamentoRepository;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

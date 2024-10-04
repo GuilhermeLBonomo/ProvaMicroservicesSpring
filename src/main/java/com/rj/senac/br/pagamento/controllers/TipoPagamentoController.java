@@ -2,7 +2,6 @@ package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.TipoPagamento;
 import com.rj.senac.br.pagamento.services.TipoPagamentoService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class TipoPagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<TipoPagamento> adicionarTipoPagamento(@Valid @RequestBody TipoPagamento tipoPagamento) {
+    public ResponseEntity<TipoPagamento> adicionarTipoPagamento(@RequestBody TipoPagamento tipoPagamento) {
         TipoPagamento novoTipoPagamento = tipoPagamentoService.adicionarTipoPagamento(tipoPagamento);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoTipoPagamento);
     }
@@ -40,7 +39,7 @@ public class TipoPagamentoController {
     @PutMapping("/{id}")
     public ResponseEntity<TipoPagamento> atualizarTipoPagamento(
             @PathVariable("id") Long id,
-            @Valid @RequestBody TipoPagamento tipoPagamentoAtualizado) {
+            @RequestBody TipoPagamento tipoPagamentoAtualizado) {
         TipoPagamento tipoPagamento = tipoPagamentoService.atualizarTipoPagamento(id, tipoPagamentoAtualizado);
         return ResponseEntity.ok(tipoPagamento);
     }

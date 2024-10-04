@@ -2,7 +2,7 @@ package com.rj.senac.br.pagamento.services;
 
 import com.rj.senac.br.pagamento.entities.NotaFiscal;
 import com.rj.senac.br.pagamento.repositories.NotaFiscalRepository;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

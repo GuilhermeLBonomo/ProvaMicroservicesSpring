@@ -2,7 +2,6 @@ package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.Usuario;
 import com.rj.senac.br.pagamento.services.UsuarioService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> adicionarUsuario(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> adicionarUsuario(@RequestBody Usuario usuario) {
         Usuario novoUsuario = usuarioService.adicionarUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
@@ -40,7 +39,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(
             @PathVariable("id") Long id,
-            @Valid @RequestBody Usuario usuarioAtualizado) {
+            @RequestBody Usuario usuarioAtualizado) {
         Usuario usuario = usuarioService.atualizarUsuario(id, usuarioAtualizado);
         return ResponseEntity.ok(usuario);
     }

@@ -1,7 +1,7 @@
 package com.rj.senac.br.pagamento.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -14,11 +14,9 @@ public class TipoPagamento {
     @Column(name = "id_tipo_pagamento", nullable = false)
     private Long idTipoPagamento;
 
-    @NotNull
     @Column(name = "metodo_pagamento", nullable = false)
     private String metodoPagamento;
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private Integer status;
 

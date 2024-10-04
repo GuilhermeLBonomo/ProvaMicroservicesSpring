@@ -1,7 +1,8 @@
 package com.rj.senac.br.pagamento.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 @Entity
@@ -13,23 +14,18 @@ public class NotaFiscal {
     @Column(name = "id_nota_fiscal", nullable = false)
     private Long idNotaFiscal;
 
-    @NotNull
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    @NotNull
     @Column(name = "valor_total", nullable = false)
     private Double valorTotal;
 
-    @NotNull
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
 
-    @NotNull
     @Column(name = "tipo_pagamento_id", nullable = false)
     private Long tipoPagamentoId;
 
-    @NotNull
     @Column(name = "id_produto", nullable = false)
     private Long idProduto;
 
