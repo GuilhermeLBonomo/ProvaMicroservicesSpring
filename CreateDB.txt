@@ -1,0 +1,49 @@
+CREATE DATABASE pagamento;
+USE pagamento ;
+
+CREATE TABLE TipoPagamento (
+  `idTipoPagamento` INT NOT NULL,
+  `metodoPagamento` VARCHAR(45) NOT NULL,
+  `status` INT NOT NULL,
+  PRIMARY KEY (`idTipoPagamento`),
+  UNIQUE INDEX `id_UNIQUE` (`idTipoPagamento` ) ,
+  UNIQUE INDEX `metodoPagamento_UNIQUE` (`metodoPagamento` ) )
+ENGINE = InnoDB;
+
+CREATE TABLE Usuario (
+  `idUsuario` INT NOT NULL AUTO_INCREMENT,
+  `cpf` CHAR(11) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `status` INT NOT NULL,
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ) ,
+  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ) ,
+  UNIQUE INDEX `emal_UNIQUE` (`email` ) )
+ENGINE = InnoDB;
+
+CREATE TABLE notaFiscal (
+  `idNotaFiscal` INT NOT NULL AUTO_INCREMENT,
+  `usuarioId` VARCHAR(45) NOT NULL,
+  `status` INT NOT NULL,
+  `valorTotalCent` INT UNSIGNED NOT NULL,
+  `Usuario_idUsuario` INT NOT NULL,
+  `TipoPagamento_idTipoPagamento` INT NOT NULL,
+  `idProduto` INT NOT NULL,
+  PRIMARY KEY (`idNotaFiscal`),
+  UNIQUE INDEX `idpedido_UNIQUE` (`idNotaFiscal` ) ,
+  INDEX `fk_pedido_Usuario_idx` (`Usuario_idUsuario` ) ,
+  INDEX `fk_pedido_TipoPagamento1_idx` (`TipoPagamento_idTipoPagamento` ) ,
+  CONSTRAINT `fk_pedido_Usuario`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES pagamento.Usuario (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedido_TipoPagamento1`
+    FOREIGN KEY (`TipoPagamento_idTipoPagamento`)
+    REFERENCES pagamento.TipoPagamento (`idTipoPagamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
