@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.Usuario;
+import com.rj.senac.br.pagamento.entities.dto.UsuarioDTO;
 import com.rj.senac.br.pagamento.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,23 +25,23 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable("id")Long id) {
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable("id") Long id) {
         return usuarioService.buscarUsuarioPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> adicionarUsuario(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = usuarioService.adicionarUsuario(usuario);
+    public ResponseEntity<UsuarioDTO> adicionarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDTO novoUsuario = usuarioService.adicionarUsuario(usuarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuario(
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(
             @PathVariable("id") Long id,
-            @RequestBody Usuario usuarioAtualizado) {
-        Usuario usuario = usuarioService.atualizarUsuario(id, usuarioAtualizado);
+            @RequestBody UsuarioDTO usuarioAtualizado) {
+        UsuarioDTO usuario = usuarioService.atualizarUsuario(id, usuarioAtualizado);
         return ResponseEntity.ok(usuario);
     }
 

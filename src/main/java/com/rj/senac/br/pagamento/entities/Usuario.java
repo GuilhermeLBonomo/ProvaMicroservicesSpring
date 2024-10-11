@@ -1,6 +1,8 @@
 package com.rj.senac.br.pagamento.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -12,15 +14,18 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario", nullable = false)
+    @Min(0)
     private Long idUsuario;
 
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
 
     @Column(name = "nome", nullable = false)
+    @Size(max = 256)
     private String nome;
 
     @Column(name = "email", nullable = false)
+    @Size(max = 256)
     private String email;
 
     @Column(name = "status", nullable = false)

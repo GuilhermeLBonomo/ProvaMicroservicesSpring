@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.services;
 
 import com.rj.senac.br.pagamento.entities.NotaFiscal;
+import com.rj.senac.br.pagamento.entities.dto.NotaFiscalDTO;
 import com.rj.senac.br.pagamento.repositories.NotaFiscalRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -26,18 +27,34 @@ public class NotaFiscalService {
     }
 
     @Transactional
-    public NotaFiscal adicionarNotaFiscal(@NotNull final NotaFiscal notaFiscal) {
-        return this.notaFiscalRepository.save(notaFiscal);
+    public NotaFiscalDTO adicionarNotaFiscal(@NotNull final NotaFiscalDTO notaFiscalDTO) {
+        NotaFiscal notaFiscal = new NotaFiscal();
+        notaFiscal.setStatus(notaFiscalDTO.getStatus());
+        notaFiscal.setValorTotal(notaFiscalDTO.getValorTotal());
+        notaFiscal.setUsuarioId(notaFiscalDTO.getUsuarioId());
+        notaFiscal.setTipoPagamentoId(notaFiscalDTO.getTipoPagamentoId());
+        notaFiscal.setIdCarrinho(notaFiscalDTO.getIdCarrinho());
+
+        NotaFiscal savedNotaFiscal = this.notaFiscalRepository.save(notaFiscal);
+        return new NotaFiscalDTO(savedNotaFiscal.getStatus(), savedNotaFiscal.getValorTotal(), savedNotaFiscal.getUsuarioId(), savedNotaFiscal.getTipoPagamentoId(), savedNotaFiscal.getIdCarrinho());
     }
 
     @Transactional
-    public NotaFiscal atualizarNotaFiscal(@NotNull final Long id, @NotNull final NotaFiscal notaFiscalAtualizada) {
+    public NotaFiscalDTO atualizarNotaFiscal(@NotNull final Long id, @NotNull final NotaFiscalDTO notaFiscalAtualizada) {
         if (!notaFiscalRepository.existsById(id)) {
             throw new RuntimeException("Nota Fiscal não encontrada com ID: " + id);
         }
 
-        notaFiscalAtualizada.setIdNotaFiscal(id);
-        return this.notaFiscalRepository.save(notaFiscalAtualizada);
+        NotaFiscal notaFiscal = new NotaFiscal();
+        notaFiscal.setIdNotaFiscal(id);
+        notaFiscal.setStatus(notaFiscalAtualizada.getStatus());
+        notaFiscal.setValorTotal(notaFiscalAtualizada.getValorTotal());
+        notaFiscal.setUsuarioId(notaFiscalAtualizada.getUsuarioId());
+        notaFiscal.setTipoPagamentoId(notaFiscalAtualizada.getTipoPagamentoId());
+        notaFiscal.setIdCarrinho(notaFiscalAtualizada.getIdCarrinho());
+
+        NotaFiscal savedNotaFiscal = this.notaFiscalRepository.save(notaFiscal);
+        return new NotaFiscalDTO(savedNotaFiscal.getStatus(), savedNotaFiscal.getValorTotal(), savedNotaFiscal.getUsuarioId(), savedNotaFiscal.getTipoPagamentoId(), savedNotaFiscal.getIdCarrinho());
     }
 
     @Transactional

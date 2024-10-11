@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.TipoPagamento;
+import com.rj.senac.br.pagamento.entities.dto.TipoPagamentoDTO;
 import com.rj.senac.br.pagamento.services.TipoPagamentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,16 @@ public class TipoPagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<TipoPagamento> adicionarTipoPagamento(@RequestBody TipoPagamento tipoPagamento) {
-        TipoPagamento novoTipoPagamento = tipoPagamentoService.adicionarTipoPagamento(tipoPagamento);
+    public ResponseEntity<TipoPagamentoDTO> adicionarTipoPagamento(@RequestBody TipoPagamentoDTO tipoPagamentoDTO) {
+        TipoPagamentoDTO novoTipoPagamento = tipoPagamentoService.adicionarTipoPagamento(tipoPagamentoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoTipoPagamento);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoPagamento> atualizarTipoPagamento(
+    public ResponseEntity<TipoPagamentoDTO> atualizarTipoPagamento(
             @PathVariable("id") Long id,
-            @RequestBody TipoPagamento tipoPagamentoAtualizado) {
-        TipoPagamento tipoPagamento = tipoPagamentoService.atualizarTipoPagamento(id, tipoPagamentoAtualizado);
+            @RequestBody TipoPagamentoDTO tipoPagamentoAtualizado) {
+        TipoPagamentoDTO tipoPagamento = tipoPagamentoService.atualizarTipoPagamento(id, tipoPagamentoAtualizado);
         return ResponseEntity.ok(tipoPagamento);
     }
 

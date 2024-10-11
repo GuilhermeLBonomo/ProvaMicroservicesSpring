@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.services;
 
 import com.rj.senac.br.pagamento.entities.TipoPagamento;
+import com.rj.senac.br.pagamento.entities.dto.TipoPagamentoDTO;
 import com.rj.senac.br.pagamento.repositories.TipoPagamentoRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,28 @@ public class TipoPagamentoService {
     }
 
     @Transactional
-    public TipoPagamento adicionarTipoPagamento(@NotNull final TipoPagamento tipoPagamento) {
-        return this.tipoPagamentoRepository.save(tipoPagamento);
+    public TipoPagamentoDTO adicionarTipoPagamento(@NotNull final TipoPagamentoDTO tipoPagamentoDTO) {
+        TipoPagamento tipoPagamento = new TipoPagamento();
+        tipoPagamento.setMetodoPagamento(tipoPagamentoDTO.getMetodoPagamento());
+        tipoPagamento.setStatus(tipoPagamentoDTO.getStatus());
+
+        TipoPagamento savedTipoPagamento = this.tipoPagamentoRepository.save(tipoPagamento);
+        return new TipoPagamentoDTO(savedTipoPagamento.getMetodoPagamento(), savedTipoPagamento.getStatus());
     }
 
     @Transactional
-    public TipoPagamento atualizarTipoPagamento(@NotNull final Long id, @NotNull final TipoPagamento tipoPagamentoAtualizado) {
+    public TipoPagamentoDTO atualizarTipoPagamento(@NotNull final Long id, @NotNull final TipoPagamentoDTO tipoPagamentoAtualizado) {
         if (!tipoPagamentoRepository.existsById(id)) {
             throw new RuntimeException("Tipo de Pagamento não encontrado com ID: " + id);
         }
-        tipoPagamentoAtualizado.setIdTipoPagamento(id);
-        return this.tipoPagamentoRepository.save(tipoPagamentoAtualizado);
+
+        TipoPagamento tipoPagamento = new TipoPagamento();
+        tipoPagamento.setIdTipoPagamento(id); // Assumindo que você tem um método para definir o ID
+        tipoPagamento.setMetodoPagamento(tipoPagamentoAtualizado.getMetodoPagamento());
+        tipoPagamento.setStatus(tipoPagamentoAtualizado.getStatus());
+
+        TipoPagamento savedTipoPagamento = this.tipoPagamentoRepository.save(tipoPagamento);
+        return new TipoPagamentoDTO(savedTipoPagamento.getMetodoPagamento(), savedTipoPagamento.getStatus());
     }
 
     @Transactional

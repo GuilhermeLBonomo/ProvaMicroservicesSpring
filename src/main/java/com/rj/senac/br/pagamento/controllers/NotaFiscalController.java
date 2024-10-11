@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.NotaFiscal;
+import com.rj.senac.br.pagamento.entities.dto.NotaFiscalDTO;
 import com.rj.senac.br.pagamento.services.NotaFiscalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,16 @@ public class NotaFiscalController {
     }
 
     @PostMapping
-    public ResponseEntity<NotaFiscal> adicionarNotaFiscal(@RequestBody NotaFiscal notaFiscal) {
-        NotaFiscal novaNotaFiscal = notaFiscalService.adicionarNotaFiscal(notaFiscal);
+    public ResponseEntity<NotaFiscalDTO> adicionarNotaFiscal(@RequestBody NotaFiscalDTO notaFiscalDTO) {
+        NotaFiscalDTO novaNotaFiscal = notaFiscalService.adicionarNotaFiscal(notaFiscalDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaNotaFiscal);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NotaFiscal> atualizarNotaFiscal(
+    public ResponseEntity<NotaFiscalDTO> atualizarNotaFiscal(
             @PathVariable("id") Long id,
-            @RequestBody NotaFiscal notaFiscalAtualizada) {
-        NotaFiscal notaFiscal = notaFiscalService.atualizarNotaFiscal(id, notaFiscalAtualizada);
+            @RequestBody NotaFiscalDTO notaFiscalAtualizada) {
+        NotaFiscalDTO notaFiscal = notaFiscalService.atualizarNotaFiscal(id, notaFiscalAtualizada);
         return ResponseEntity.ok(notaFiscal);
     }
 

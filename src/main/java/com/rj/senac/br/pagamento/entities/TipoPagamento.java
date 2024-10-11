@@ -1,6 +1,8 @@
 package com.rj.senac.br.pagamento.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -12,9 +14,11 @@ public class TipoPagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tipo_pagamento", nullable = false)
+    @Min(0)
     private Long idTipoPagamento;
 
     @Column(name = "metodo_pagamento", nullable = false)
+    @Size(max = 256)
     private String metodoPagamento;
 
     @Column(name = "status", nullable = false)

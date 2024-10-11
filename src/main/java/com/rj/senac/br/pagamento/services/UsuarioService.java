@@ -1,6 +1,7 @@
 package com.rj.senac.br.pagamento.services;
 
 import com.rj.senac.br.pagamento.entities.Usuario;
+import com.rj.senac.br.pagamento.entities.dto.UsuarioDTO;
 import com.rj.senac.br.pagamento.repositories.UsuarioRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,32 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario adicionarUsuario(@NotNull final Usuario usuario) {
-        return this.usuarioRepository.save(usuario);
+    public UsuarioDTO adicionarUsuario(@NotNull final UsuarioDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setCpf(usuarioDTO.getCpf());
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setStatus(usuarioDTO.getStatus());
+
+        Usuario savedUsuario = this.usuarioRepository.save(usuario);
+        return new UsuarioDTO(savedUsuario.getCpf(), savedUsuario.getNome(), savedUsuario.getEmail(), savedUsuario.getStatus());
     }
 
     @Transactional
-    public Usuario atualizarUsuario(@NotNull final Long id, @NotNull final Usuario usuarioAtualizado) {
+    public UsuarioDTO atualizarUsuario(@NotNull final Long id, @NotNull final UsuarioDTO usuarioAtualizado) {
         if (!usuarioRepository.existsById(id)) {
             throw new RuntimeException("Usuário não encontrado com ID: " + id);
         }
-        usuarioAtualizado.setIdUsuario(id);
-        return this.usuarioRepository.save(usuarioAtualizado);
+
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(id);
+        usuario.setCpf(usuarioAtualizado.getCpf());
+        usuario.setNome(usuarioAtualizado.getNome());
+        usuario.setEmail(usuarioAtualizado.getEmail());
+        usuario.setStatus(usuarioAtualizado.getStatus());
+
+        Usuario savedUsuario = this.usuarioRepository.save(usuario);
+        return new UsuarioDTO(savedUsuario.getCpf(), savedUsuario.getNome(), savedUsuario.getEmail(), savedUsuario.getStatus());
     }
 
     @Transactional
