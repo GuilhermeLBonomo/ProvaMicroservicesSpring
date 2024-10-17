@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class NotaFiscalDTO {
     @NotNull(message = "O status não pode ser nulo.")
-    private Integer status;
+    private Integer status = 1; // 1 padrão; 0 - deletado; 2 - finalizado;
 
     @NotNull(message = "O valor total não pode ser nulo.")
     @Min(value = 0, message = "O valor total deve ser maior ou igual a zero.")
@@ -74,11 +74,10 @@ public class NotaFiscalDTO {
         this.idCarrinho = idCarrinho;
     }
 
-    public NotaFiscalDTO(@NotNull Integer status, @NotNull Double valorTotal, @NotNull Long usuarioId, @NotNull Long tipoPagamentoId, @NotNull Long idCarrinho) {
-        this.setStatus(status);
-        this.setValorTotal(valorTotal);
-        this.setUsuarioId(usuarioId);
-        this.setTipoPagamentoId(tipoPagamentoId);
-        this.setIdCarrinho(idCarrinho);
+    public NotaFiscalDTO(@NotNull Double valorTotal, @NotNull Long usuarioId, @NotNull Long tipoPagamentoId, @NotNull Long idCarrinho) {
+        this.valorTotal = valorTotal;
+        this.usuarioId = usuarioId;
+        this.tipoPagamentoId = tipoPagamentoId;
+        this.idCarrinho = idCarrinho;
     }
 }

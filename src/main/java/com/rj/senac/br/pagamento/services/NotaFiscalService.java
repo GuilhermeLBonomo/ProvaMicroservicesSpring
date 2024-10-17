@@ -36,17 +36,14 @@ public class NotaFiscalService {
         notaFiscal.setIdCarrinho(notaFiscalDTO.getIdCarrinho());
 
         NotaFiscal savedNotaFiscal = this.notaFiscalRepository.save(notaFiscal);
-        return new NotaFiscalDTO(savedNotaFiscal.getStatus(), savedNotaFiscal.getValorTotal(), savedNotaFiscal.getUsuarioId(), savedNotaFiscal.getTipoPagamentoId(), savedNotaFiscal.getIdCarrinho());
+        return toDto(savedNotaFiscal);
     }
 
     @Transactional
     public NotaFiscalDTO atualizarNotaFiscal(@NotNull final Long id, @NotNull final NotaFiscalDTO notaFiscalAtualizada) {
-        if (!notaFiscalRepository.existsById(id)) {
-            throw new RuntimeException("Nota Fiscal não encontrada com ID: " + id);
-        }
+        NotaFiscal notaFiscal = notaFiscalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota Fiscal não encontrada com ID: " + id));
 
-        NotaFiscal notaFiscal = new NotaFiscal();
-        notaFiscal.setIdNotaFiscal(id);
         notaFiscal.setStatus(notaFiscalAtualizada.getStatus());
         notaFiscal.setValorTotal(notaFiscalAtualizada.getValorTotal());
         notaFiscal.setUsuarioId(notaFiscalAtualizada.getUsuarioId());
@@ -54,7 +51,16 @@ public class NotaFiscalService {
         notaFiscal.setIdCarrinho(notaFiscalAtualizada.getIdCarrinho());
 
         NotaFiscal savedNotaFiscal = this.notaFiscalRepository.save(notaFiscal);
-        return new NotaFiscalDTO(savedNotaFiscal.getStatus(), savedNotaFiscal.getValorTotal(), savedNotaFiscal.getUsuarioId(), savedNotaFiscal.getTipoPagamentoId(), savedNotaFiscal.getIdCarrinho());
+        return toDto(savedNotaFiscal);
+    }
+
+    @Transactional
+    public void finalizarPagamento(@NotNull final Long id) {
+        NotaFiscal notaFiscal = notaFiscalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota Fiscal não encontrada com ID: " + id));
+
+        notaFiscal.setStatus(2); // Muda o status para 2 (finalizado)
+        notaFiscalRepository.save(notaFiscal);
     }
 
     @Transactional
@@ -63,5 +69,14 @@ public class NotaFiscalService {
             throw new RuntimeException("Nota Fiscal não encontrada com ID: " + id);
         }
         notaFiscalRepository.deleteById(id);
+    }
+
+    private NotaFiscalDTO toDto(NotaFiscal notaFiscal) {
+        return new NotaFiscalDTO(
+                notaFiscal.getValorTotal(),
+                notaFiscal.getUsuarioId(),
+                notaFiscal.getTipoPagamentoId(),
+                notaFiscal.getIdCarrinho()
+        );
     }
 }

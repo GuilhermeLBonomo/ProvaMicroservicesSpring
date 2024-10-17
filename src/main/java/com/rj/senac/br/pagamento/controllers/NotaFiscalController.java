@@ -32,6 +32,7 @@ public class NotaFiscalController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "*")
     public ResponseEntity<NotaFiscalDTO> adicionarNotaFiscal(@RequestBody NotaFiscalDTO notaFiscalDTO) {
         NotaFiscalDTO novaNotaFiscal = notaFiscalService.adicionarNotaFiscal(notaFiscalDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaNotaFiscal);
@@ -48,6 +49,12 @@ public class NotaFiscalController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarNotaFiscal(@PathVariable("id") Long id) {
         notaFiscalService.deletarNotaFiscal(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/finalizar")
+    public ResponseEntity<Void> finalizarPagamento(@PathVariable("id") Long id) {
+        notaFiscalService.finalizarPagamento(id);
         return ResponseEntity.noContent().build();
     }
 }
