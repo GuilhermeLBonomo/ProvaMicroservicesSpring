@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/notas-fiscais")
@@ -67,6 +67,7 @@ public class NotaFiscalController {
     }
 
     @PostMapping("/{id}/finalizar")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> finalizarPagamento(@PathVariable("id") Long id) {
         notaFiscalService.finalizarPagamento(id);
         return ResponseEntity.noContent().build();

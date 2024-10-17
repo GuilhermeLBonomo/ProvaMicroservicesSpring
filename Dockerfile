@@ -1,24 +1,12 @@
-FROM openjdk:17-jdk-slim AS build
+FROM openjdk:17-jdk-alphine
 
 LABEL authors="Guilherme Lopes, Matheus da Cunha & Bernardo Gondim"
 
-RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+ARG JAR_FILE=target/*.jar
 
-WORKDIR /app
+COPY ${JAR_FILE} app.jar
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
+ENTRYPOINT ["java","-jar","/app.jar"]
 
-COPY src ./src
 
-RUN mvn package -DskipTests
 
-FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
-
-EXPOSE 8080
-
-CMD ["java", "-jar", "app.jar"]

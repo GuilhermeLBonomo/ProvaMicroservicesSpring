@@ -58,7 +58,6 @@ public class NotaFiscalService {
     public void finalizarPagamento(@NotNull final Long id) {
         NotaFiscal notaFiscal = notaFiscalRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nota Fiscal não encontrada com ID: " + id));
-
         notaFiscal.setStatus(2); // Muda o status para 2 (finalizado)
         notaFiscalRepository.save(notaFiscal);
     }
