@@ -1,17 +1,25 @@
 package com.rj.senac.br.pagamento.controllers;
 
 import com.rj.senac.br.pagamento.entities.NotaFiscal;
+import com.rj.senac.br.pagamento.entities.dto.ItemCarrinhoDTO;
 import com.rj.senac.br.pagamento.entities.dto.NotaFiscalDTO;
+import com.rj.senac.br.pagamento.interfacefeign.CarrinhoDeCompraFeignClient;
 import com.rj.senac.br.pagamento.services.NotaFiscalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/notas-fiscais")
 public class NotaFiscalController {
+
+    @Autowired
+    CarrinhoDeCompraFeignClient carrinhoDeCompraFeignClient;
+
     private final NotaFiscalService notaFiscalService;
 
     public NotaFiscalController(final NotaFiscalService notaFiscalService) {
@@ -29,6 +37,12 @@ public class NotaFiscalController {
         return notaFiscalService.buscarNotaFiscalPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/carrinho")
+    public ResponseEntity<List<ItemCarrinhoDTO>> buscarCarrinhoPorId(@PathVariable("id") Long id) {
+        List<ItemCarrinhoDTO> itemCarrinhos = carrinhoDeCompraFeignClient.getItemsByCartId(id).getBody();
+        return ResponseEntity.ok(itemCarrinhos);
     }
 
     @PostMapping
