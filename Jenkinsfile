@@ -14,7 +14,7 @@ pipeline {
             stage('Instalar Dependências e Construir JAR') {
                         steps {
                             script {
-                                sh 'mvn clean install'  // powershell 'mvn clean install'
+                                powershell 'mvn clean install'  // powershell 'mvn clean install'
                             }
                         }
                     }
@@ -25,7 +25,7 @@ pipeline {
                                 def imageTag = "${appName}:${env.BUILD_ID}"
 
                                 // Construir a imagem Docker
-                                bat "docker build -t ${imageTag} ."
+                                powershell "docker build -t ${imageTag} ."
                             }
                         }
                     }
@@ -35,10 +35,10 @@ pipeline {
                                 def appName = 'provasmicroservicesjava'
                                 def imageTag = "${appName}:${env.BUILD_ID}"
                                 // Parar e remover o container existente, se houver
-                                sh "docker stop ${appName} || true"
-                                sh "docker rm ${appName} || true"
+                                powershell "docker stop ${appName} || true"
+                                powershell "docker rm ${appName} || true"
                                 // Executar o novo containerssss
-                                sh "docker run -d --name ${appName} -p 3000:3000 ${imageTag}"
+                                powershell "docker run -d --name ${appName} -p 3000:3000 ${imageTag}"
                             }
                         }
                     }
