@@ -50,4 +50,5 @@ pipeline {
                     failure {
                         echo 'Houve um erro durante o deploy.'
                     }
-                }
+        }
+}
