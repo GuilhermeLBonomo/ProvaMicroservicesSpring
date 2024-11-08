@@ -32,7 +32,7 @@ pipeline {
              stage('Fazer Deploy') {
                         steps {
                             script {
-                                def appName = 'arquivosbackendnest'
+                                def appName = 'provasmicroservicesjava'
                                 def imageTag = "${appName}:${env.BUILD_ID}"
                                 // Parar e remover o container existente, se houver
                                 sh "docker stop ${appName} || true"
