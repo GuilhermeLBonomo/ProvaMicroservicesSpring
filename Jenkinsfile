@@ -14,7 +14,7 @@ pipeline {
             stage('Instalar Dependências e Construir JAR') {
                         steps {
                             script {
-                                powershell 'mvn clean install'  // powershell 'mvn clean install'
+                                bat 'mvn clean install'  // bat 'mvn clean install'
                             }
                         }
                     }
@@ -25,7 +25,7 @@ pipeline {
                                 def imageTag = "${appName}:${env.BUILD_ID}"
 
                                 // Construir a imagem Docker
-                                powershell "docker build -t ${imageTag} ."
+                                bat "docker build -t ${imageTag} ."
                             }
                         }
                     }
@@ -35,19 +35,17 @@ pipeline {
                                 def appName = 'provasmicroservicesjava'
                                 def imageTag = "${appName}:${env.BUILD_ID}"
                                 // Parar e remover o container existente, se houver
-                                powershell "docker stop ${appName} || true"
-                                powershell "docker rm ${appName} || true"
+                                bat "docker stop ${appName} || true"
+                                bat "docker rm ${appName} || true"
                                 // Executar o novo containerssss
-                                powershell "docker run -d --name ${appName} -p 3000:3000 ${imageTag}"
+                                bat "docker run -d --name ${appName} -p 3000:3000 ${imageTag}"
                             }
                         }
                     }
                 }
                 post {
                     success {
-                        echo 'Deploy realizado com sucesso!'
-                    }
-                    failure {
+                        echo 'Deploy realizado com sucesso!'bat              failure {
                         echo 'Houve um erro durante o deploy.'
                     }
         }
