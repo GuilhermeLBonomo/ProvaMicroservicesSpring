@@ -1,9 +1,9 @@
 pipeline {
     agent any
-     tools {
-            maven 'Maven 3.9.2'
-            jdk 'OpenJDK 17'
-        }
+     //tools {
+     //       maven 'Maven 3.9.2'
+     //       jdk 'OpenJDK 17'
+     //   }
      stages {
             stage('Verificar Repositório') {
                 steps {
