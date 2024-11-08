@@ -45,8 +45,10 @@ pipeline {
                 }
                 post {
                     success {
-                        echo 'Deploy realizado com sucesso!'bat              failure {
+                        echo 'Deploy realizado com sucesso!'
+                    }
+                    failure {
                         echo 'Houve um erro durante o deploy.'
                     }
         }
-}}
+}
