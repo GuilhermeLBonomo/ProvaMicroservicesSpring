@@ -14,7 +14,7 @@ pipeline {
             stage('Instalar Dependências e Construir JAR') {
                         steps {
                             script {
-                                bat 'mvn clean install'  // bat 'mvn clean install'
+                                bat 'mvn clean install'
                             }
                         }
                     }
@@ -38,7 +38,7 @@ pipeline {
                                 bat "docker stop ${appName} || true"
                                 bat "docker rm ${appName} || true"
                                 // Executar o novo containerssss
-                                bat "docker run -d --name ${appName} -p 3000:3000 ${imageTag}"
+                                bat "docker run -d --name ${appName} -p 8081:8081 ${imageTag}"
                             }
                         }
                     }
